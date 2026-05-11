@@ -1,0 +1,47 @@
+services:
+  book-worms-db:
+    container_name: book-worms-db
+    image: postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: db
+    ports:
+      - "5432:5432"
+    volumes:
+      - book-worms-db-data:/var/lib/postgresql/data
+    networks:
+      - internal
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    volumes: # Add this section
+      - pgadmin-data:/var/lib/pgadmin
+    networks:
+      - internal
+    depends_on:
+      - book-worms-db
+
+  mail-dev:
+    container_name: mail-dev-bookworms
+    image: maildev/maildev
+    ports:
+      - "1080:1080"
+      - "1025:1025"
+
+networks:
+  internal:
+    driver: bridge
+    name: internal # Forces exact network name (no project prefix)ernal
+
+volumes:
+  book-worms-db-data:
+    driver: local
+  pgadmin-data: # Allows us to persist pgadmin data so need to re-add servers every single time
+    driver: local
