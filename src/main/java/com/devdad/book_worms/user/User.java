@@ -4,19 +4,26 @@ package com.devdad.book_worms.user;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.jspecify.annotations.Nullable;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.devdad.book_worms.role.Role;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -47,7 +54,8 @@ public class User implements UserDetails, Principal {
 	private boolean accountLocked;
 	private boolean enabled;
 
-	// private List<Role> roles;
+	@ManyToMany(fetch = FetchType.EAGER)
+	private List<Role> roles;
 
 	@CreatedDate
 	@Column(nullable = false, updatable = false)
@@ -64,8 +72,10 @@ public class User implements UserDetails, Principal {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Implement Roles entity.
-		throw new UnsupportedOperationException("Unimplemented method 'getAuthorities'");
+		return this.roles
+			.stream()
+			.map(r -> new SimpleGrantedAuthority(r.getName()))
+			.collect(Collectors.toList());
 	}
 
 	@Override
@@ -78,7 +88,7 @@ public class User implements UserDetails, Principal {
 		return email;
 	}
 
-	private String fullName(){
+	private String fullName() {
 		return firstName + " " + lastName;
 	}
 
