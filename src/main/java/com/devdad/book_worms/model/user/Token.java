@@ -1,6 +1,7 @@
 package com.devdad.book_worms.user;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.springframework.cglib.core.Local;
 
@@ -10,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +21,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 public class Token {
 
 	@Id
@@ -26,9 +29,9 @@ public class Token {
 	private Integer id;
 
 	private String token;
-	private LocalDate createdAt;
-	private LocalDate expiresAt;
-	private LocalDate validatedAt;
+	private LocalDateTime createdAt;
+	private LocalDateTime expiresAt;
+	private LocalDateTime validatedAt;
 
 	@ManyToOne
 	@JoinColumn(name = "userId", nullable = false)
