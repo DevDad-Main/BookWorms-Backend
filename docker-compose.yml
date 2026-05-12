@@ -1,7 +1,7 @@
 services:
   book-worms-db:
+    image: postgres:17
     container_name: book-worms-db
-    image: postgres
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: password

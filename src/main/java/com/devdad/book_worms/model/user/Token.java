@@ -1,4 +1,4 @@
-package com.devdad.book_worms.user;
+package com.devdad.book_worms.model.user;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

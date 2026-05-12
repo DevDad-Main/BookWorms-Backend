@@ -12,6 +12,7 @@ import com.devdad.book_worms.service.AuthenticationService;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -28,7 +29,7 @@ public class AuthenticationController {
 	@ResponseStatus(HttpStatus.ACCEPTED)
 	public ResponseEntity<?> register(
 			@RequestBody @Valid RegistrationRequestDTO registrationRequest
-			){
+			) throws MessagingException{
 			authenticationService.register(registrationRequest);
 
 			return ResponseEntity.accepted().build();

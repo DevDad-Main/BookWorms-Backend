@@ -1,5 +1,5 @@
 
-package com.devdad.book_worms.user;
+package com.devdad.book_worms.model.user;
 
 import java.security.Principal;
 import java.time.LocalDate;
@@ -36,7 +36,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @EntityListeners(AuditingEntityListener.class)
 @SuperBuilder
 public class User implements UserDetails, Principal {
@@ -90,7 +90,7 @@ public class User implements UserDetails, Principal {
 		return email;
 	}
 
-	private String fullName() {
+	public String fullName() {
 		return firstName + " " + lastName;
 	}
 

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>BookWorms - Activate your account</title>
+  <style type="text/css">
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background-color: #111315;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    .wrapper {
+      width: 100%;
+      table-layout: fixed;
+      background-color: #111315;
+      padding: 40px 0;
+    }
+    .main {
+      background-color: #181A1B;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+    h1 {
+      font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+      font-weight: 600;
+      font-size: 28px;
+      line-height: 1.2;
+      color: #F5F1E8;
+      letter-spacing: -0.02em;
+    }
+    h2 {
+      font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+      font-weight: 600;
+      font-size: 22px;
+      line-height: 1.25;
+      color: #F5F1E8;
+      letter-spacing: -0.015em;
+    }
+    p {
+      font-size: 15px;
+      line-height: 1.7;
+      color: #B8B2A8;
+    }
+    .text-muted {
+      color: #5C5750;
+    }
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      background-color: #C6A972;
+      color: #111315;
+      text-decoration: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+    .btn:hover {
+      background-color: #D4BC8A;
+    }
+    .code-box {
+      background-color: #232527;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.04);
+      padding: 20px;
+      text-align: center;
+    }
+    .code-box .code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+      font-size: 28px;
+      font-weight: 700;
+      color: #C6A972;
+      letter-spacing: 6px;
+    }
+    .divider {
+      height: 1px;
+      background-color: rgba(255,255,255,0.06);
+      border: none;
+    }
+    .footer-text {
+      font-size: 12px;
+      color: #5C5750;
+      line-height: 1.6;
+    }
+    @@media only screen and (max-width: 600px) {
+      .main { width: 100% !important; }
+      .content { padding: 32px 24px !important; }
+      h1 { font-size: 24px !important; }
+    }
+  </style>
+</head>
+<body>
+  <table class="wrapper" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+    <tr>
+      <td align="center">
+        <table class="main" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="max-width: 560px; background-color: #181A1B; border-radius: 16px; border: 1px solid rgba(255,255,255,0.04);">
+
+          <!-- Header -->
+          <tr>
+            <td align="center" style="padding: 40px 40px 0;">
+              <table cellpadding="0" cellspacing="0" role="presentation">
+                <tr>
+                  <td align="center">
+                    <span style="font-family: 'Playfair Display', Georgia, serif; font-size: 20px; font-weight: 700; color: #C6A972; letter-spacing: -0.01em;">BookWorms</span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td class="content" style="padding: 36px 40px 40px;">
+              <table cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                <tr>
+                  <td>
+                    <h1 style="font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: 28px; line-height: 1.2; color: #F5F1E8; letter-spacing: -0.02em; margin-bottom: 12px;">
+                      Welcome, <span th:text="${username}">Reader</span>
+                    </h1>
+                    <p style="font-size: 15px; line-height: 1.7; color: #B8B2A8; margin-bottom: 28px;">
+                      Thanks for joining BookWorms. To start exploring and borrowing books, please activate your account.
+                    </p>
+
+                    <!-- Button -->
+                    <table cellpadding="0" cellspacing="0" role="presentation" width="100%" style="margin-bottom: 28px;">
+                      <tr>
+                        <td align="center">
+                          <a th:href="${confirmaionUrl}" class="btn" style="display: inline-block; padding: 14px 32px; background-color: #C6A972; color: #111315; text-decoration: none; border-radius: 10px; font-size: 15px; font-weight: 600; letter-spacing: 0.01em;">
+                            Activate Account
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- OR -->
+                    <table cellpadding="0" cellspacing="0" role="presentation" width="100%" style="margin-bottom: 24px;">
+                      <tr>
+                        <td align="center" style="padding-bottom: 8px;">
+                          <span style="font-size: 13px; color: #5C5750; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500;">Or use this code</span>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Activation Code -->
+                    <table cellpadding="0" cellspacing="0" role="presentation" width="100%" style="margin-bottom: 32px;">
+                      <tr>
+                        <td>
+                          <table class="code-box" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="background-color: #232527; border-radius: 10px; border: 1px solid rgba(255,255,255,0.04); padding: 20px;">
+                            <tr>
+                              <td align="center">
+                                <span class="code" style="font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace; font-size: 28px; font-weight: 700; color: #C6A972; letter-spacing: 6px;" th:text="${activation_code}">123456</span>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Divider -->
+                    <tr>
+                      <td style="padding-bottom: 24px;">
+                        <table cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                          <tr>
+                            <td style="height: 1px; background-color: rgba(255,255,255,0.06);"></td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                      <td>
+                        <p class="footer-text" style="font-size: 12px; color: #5C5750; line-height: 1.6; margin-bottom: 4px;">
+                          This link expires in 24 hours. If you didn't create an account, you can safely ignore this email.
+                        </p>
+                        <p class="footer-text" style="font-size: 12px; color: #5C5750; line-height: 1.6;">
+                          &copy; 2026 BookWorms &mdash; built for readers, by readers.
+                        </p>
+                      </td>
+                    </tr>
+
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

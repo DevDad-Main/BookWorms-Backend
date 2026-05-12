@@ -4,16 +4,21 @@ import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.devdad.book_worms.dto.auth.RegistrationRequestDTO;
 import com.devdad.book_worms.role.Role;
 import com.devdad.book_worms.role.RoleRepository;
-import com.devdad.book_worms.user.Token;
-import com.devdad.book_worms.user.TokenRepository;
-import com.devdad.book_worms.user.User;
-import com.devdad.book_worms.user.UserRepository;
+
+import jakarta.mail.MessagingException;
+
+import com.devdad.book_worms.model.email.EmailTemplateName;
+import com.devdad.book_worms.model.user.Token;
+import com.devdad.book_worms.respository.TokenRepository;
+import com.devdad.book_worms.model.user.User;
+import com.devdad.book_worms.respository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,7 +32,10 @@ public class AuthenticationService {
 	private final TokenRepository tokenRepository;
 	private final EmailService emailService;
 
-	public void register(RegistrationRequestDTO registrationRequestDTO) {
+	@Value("${application.mailing.frontend.activation-url}")
+	private String activationUrl;
+
+	public void register(RegistrationRequestDTO registrationRequestDTO) throws MessagingException {
 		Role userRole = roleRepository.findByName("USER")
 				// TODO -> add custom exception.
 				.orElseThrow(() -> new IllegalStateException("ROLE USER was not initialized."));
@@ -46,20 +54,23 @@ public class AuthenticationService {
 		sendValidationEmail(user);
 	}
 
-	private void sendValidationEmail(User user) {
-		var newToken = generateAndSaveActivationToken(user);
+	private void sendValidationEmail(User user) throws MessagingException {
+		String newToken = generateAndSaveActivationToken(user);
 		// Send email.
+		emailService.sendEmail(
+				user.getEmail(), user.fullName(), EmailTemplateName.ACTIVATE_ACCOUNT, activationUrl, newToken,
+				"Account Activation");
 	}
 
 	private String generateAndSaveActivationToken(User user) {
 		int codeLength = 6;
 		String generatedToken = generateActivationCode(codeLength);
 		Token token = Token.builder()
-			.token(generatedToken)
-			.createdAt(LocalDateTime.now())
-			.expiresAt(LocalDateTime.now().plusMinutes(15))
-			.user(user)
-			.build();
+				.token(generatedToken)
+				.createdAt(LocalDateTime.now())
+				.expiresAt(LocalDateTime.now().plusMinutes(15))
+				.user(user)
+				.build();
 
 		tokenRepository.save(token);
 		return generatedToken;
