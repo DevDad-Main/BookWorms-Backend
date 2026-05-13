@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.devdad.book_worms.dto.auth.RegistrationRequestDTO;
+import com.devdad.book_worms.exception.EmailAlreadyExistsException;
 import com.devdad.book_worms.role.Role;
 import com.devdad.book_worms.role.RoleRepository;
 
@@ -39,6 +40,11 @@ public class AuthenticationService {
 		Role userRole = roleRepository.findByName("USER")
 				// TODO -> add custom exception.
 				.orElseThrow(() -> new IllegalStateException("ROLE USER was not initialized."));
+
+		if (!userRepository.findByEmail(registrationRequestDTO.getEmail()).isEmpty()) {
+			throw new EmailAlreadyExistsException(
+					"User with that email already exists. " + registrationRequestDTO.getEmail());
+		}
 
 		User user = User.builder()
 				.firstName(registrationRequestDTO.getFirstName())
