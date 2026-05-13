@@ -40,7 +40,7 @@ public class JwtService {
 	 * @param userDetails - The users details
 	 * @return Generated Jwt Token.
 	 */
-	private String generateToken(Map<String, Object> claims, UserDetails userDetails) {
+	public String generateToken(Map<String, Object> claims, UserDetails userDetails) {
 		return buildToken(claims, userDetails, jwtExpiration);
 	}
 

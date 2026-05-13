@@ -36,4 +36,23 @@ public class GlobalExceptionHandler {
 		return ResponseEntity.badRequest().body(errors);
 	}
 
+	@ExceptionHandler
+	public ResponseEntity<Map<String, Object>> handleTokenNotFoundException(TokenNotFoundException exception){
+		log.warn("[ERR HANDLER]: " + "Token not found. {}", exception.getMessage());
+
+		Map<String, Object> errors = new HashMap<>();
+		errors.put("message", "Invalid Token, Token Not Found.");
+		return ResponseEntity.badRequest().body(errors);
+	}
+
+
+	@ExceptionHandler
+	public ResponseEntity<Map<String, Object>> handleExpiredActivationTokenException(ExpiredActivationTokenException exception){
+		log.warn("[ERR HANDLER]: " + "Expired activation token. {}", exception.getMessage());
+
+		Map<String, Object> errors = new HashMap<>();
+		errors.put("message", "Expired Activation Token.");
+		return ResponseEntity.badRequest().body(errors);
+	}
+
 }
