@@ -26,10 +26,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
@@ -38,7 +38,7 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @Table(name = "users")
 @EntityListeners(AuditingEntityListener.class)
-@SuperBuilder
+@Builder
 public class User implements UserDetails, Principal {
 
 	@Id
