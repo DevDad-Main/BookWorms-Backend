@@ -15,6 +15,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.devdad.book_worms.model.book.Book;
+import com.devdad.book_worms.model.history.BookTransactionHistory;
 import com.devdad.book_worms.role.Role;
 
 import jakarta.persistence.Column;
@@ -24,6 +26,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -59,6 +62,12 @@ public class User implements UserDetails, Principal {
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Role> roles;
 
+	@OneToMany(mappedBy = "owner")
+	private List<Book> books;
+
+	@OneToMany(mappedBy = "user")
+	private List<BookTransactionHistory> bookTransactionHistories;
+
 	@CreatedDate
 	@Column(nullable = false, updatable = false)
 	private LocalDate createdDate;
@@ -75,9 +84,9 @@ public class User implements UserDetails, Principal {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.roles
-			.stream()
-			.map(r -> new SimpleGrantedAuthority(r.getName()))
-			.collect(Collectors.toList());
+				.stream()
+				.map(r -> new SimpleGrantedAuthority(r.getName()))
+				.collect(Collectors.toList());
 	}
 
 	@Override

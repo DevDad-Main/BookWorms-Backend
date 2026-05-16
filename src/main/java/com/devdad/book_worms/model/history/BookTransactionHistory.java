@@ -1,7 +1,8 @@
-package com.devdad.book_worms.model.feedback;
+package com.devdad.book_worms.model.history;
 
 import com.devdad.book_worms.common.BaseEntity;
 import com.devdad.book_worms.model.book.Book;
+import com.devdad.book_worms.model.user.User;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -18,13 +19,16 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Feedback extends BaseEntity {
+public class BookTransactionHistory extends BaseEntity {
 
-	private Double note;
-	private String comment;
-
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
 
 	@ManyToOne
 	@JoinColumn(name = "book_id")
 	private Book book;
+
+	private boolean returned;
+	private boolean returnApproved;
 }
