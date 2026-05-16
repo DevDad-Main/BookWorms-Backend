@@ -11,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,4 +45,19 @@ public class Book extends BaseEntity {
 
 	@OneToMany(mappedBy = "book")
 	private List<BookTransactionHistory> bookTransactionHistories;
+
+	@Transient
+	public double getBookRating(){
+		if(feedbacks == null || feedbacks.isEmpty()){
+			return 0.0;
+		}
+
+		var rate = this.feedbacks.stream()
+			.mapToDouble(Feedback::getNote)
+			.average()
+			.orElse(0.0);
+
+		double roundedrate = Math.round(rate * 10.0) / 10.0;
+		return roundedrate;
+	}
 }
