@@ -11,7 +11,8 @@ import com.devdad.book_worms.role.Role;
 import com.devdad.book_worms.role.RoleRepository;
 
 @SpringBootApplication
-@EnableJpaAuditing
+// Only works for CreatedDate and LastModifiedDate by default
+@EnableJpaAuditing(auditorAwareRef = "auditorAware")
 @EnableAsync
 public class BookWormsApplication {
 
