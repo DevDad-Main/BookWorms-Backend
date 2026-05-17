@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.devdad.book_worms.common.PageResponse;
 import com.devdad.book_worms.dto.book.BookRequestDTO;
 import com.devdad.book_worms.dto.book.BookResponseDTO;
+import com.devdad.book_worms.dto.book.BorrowedBookResponseDTO;
 import com.devdad.book_worms.service.BookService;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -56,5 +57,26 @@ public class BookController {
 			Authentication currentUser) {
 		
 		return ResponseEntity.ok(bookService.findAllBooksByOwner(page, size, currentUser));
+	}
+
+
+	@GetMapping("/borrowed")
+	public ResponseEntity<PageResponse<BorrowedBookResponseDTO>> findAllBorrowedBooks(
+			@RequestParam(name = "page", defaultValue = "0", required = false) int page,
+			@RequestParam(name = "size", defaultValue = "10", required = false) int size,
+			Authentication currentUser) {
+		
+		return ResponseEntity.ok(bookService.findAllBorrowedBooks(page, size, currentUser));
+	}
+
+
+
+	@GetMapping("/returned")
+	public ResponseEntity<PageResponse<BorrowedBookResponseDTO>> findAllReturnedBooks(
+			@RequestParam(name = "page", defaultValue = "0", required = false) int page,
+			@RequestParam(name = "size", defaultValue = "10", required = false) int size,
+			Authentication currentUser) {
+		
+		return ResponseEntity.ok(bookService.findAllReturnedBooks(page, size, currentUser));
 	}
 }

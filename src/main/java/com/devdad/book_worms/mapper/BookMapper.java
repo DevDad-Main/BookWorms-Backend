@@ -2,7 +2,10 @@ package com.devdad.book_worms.mapper;
 
 import com.devdad.book_worms.dto.book.BookRequestDTO;
 import com.devdad.book_worms.dto.book.BookResponseDTO;
+import com.devdad.book_worms.dto.book.BorrowedBookResponseDTO;
 import com.devdad.book_worms.model.book.Book;
+import com.devdad.book_worms.model.history.BookTransactionHistory;
+import com.devdad.book_worms.respository.BookTransactionHistoryRepository;
 
 public class BookMapper {
 
@@ -31,4 +34,16 @@ public class BookMapper {
 			// .cover() TODO: implemenet image upload later
 			.build();
 	}
+
+	public static BorrowedBookResponseDTO toBorrowedBookResponseDTO(BookTransactionHistory history){
+		return BorrowedBookResponseDTO.builder()
+			.id(history.getBook().getId())
+			.title(history.getBook().getTitle())
+			.authorName(history.getBook().getAuthorName())
+			.isbn(history.getBook().getIsbn())
+			.rate(history.getBook().getBookRating())
+			.returned(history.isReturned())
+			.returnApproved(history.isReturnApproved())
+			.build();
+	} 
 }
