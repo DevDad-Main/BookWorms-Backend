@@ -27,17 +27,17 @@ public class BeansConfig {
 	}
 
 	@Bean
-	public PasswordEncoder passwordEncoder(){
+	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 
 	@Bean
-	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration){
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) {
 		return authenticationConfiguration.getAuthenticationManager();
 	}
 
 	@Bean
-	public AuditorAware<Integer> auditorAware(){
+	public AuditorAware<Integer> auditorAware() {
 		return new ApplicationAuditAware();
 	}
 }

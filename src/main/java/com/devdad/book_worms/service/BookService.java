@@ -1,12 +1,20 @@
 package com.devdad.book_worms.service;
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import com.devdad.book_worms.common.PageResponse;
 import com.devdad.book_worms.dto.book.BookRequestDTO;
 import com.devdad.book_worms.dto.book.BookResponseDTO;
 import com.devdad.book_worms.mapper.BookMapper;
 import com.devdad.book_worms.model.book.Book;
+import com.devdad.book_worms.model.book.BookSpecification;
 import com.devdad.book_worms.model.user.User;
 import com.devdad.book_worms.respository.BookRepository;
 
@@ -29,7 +37,44 @@ public class BookService {
 
 	public BookResponseDTO findBookById(Integer bookId) {
 		return bookRepository.findById(bookId)
-			.map(BookMapper::toDTOResponse)
-			.orElseThrow(() -> new EntityNotFoundException("No book found with the ID::" + bookId));
+				.map(BookMapper::toDTOResponse)
+				.orElseThrow(() -> new EntityNotFoundException("No book found with the ID::" + bookId));
+	}
+
+	public PageResponse<BookResponseDTO> findAllBooks(int page, int size, Authentication currentUser) {
+		User user = (User) currentUser.getPrincipal();
+		Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
+		Page<Book> books = bookRepository.findAllDisplayableBooks(pageable, user.getId());
+		List<BookResponseDTO> bookReponse = books.stream()
+				.map(BookMapper::toDTOResponse)
+				.toList();
+
+		return new PageResponse<>(
+				bookReponse,
+				books.getNumber(),
+				books.getSize(),
+				books.getTotalElements(),
+				books.getTotalPages(),
+				books.isFirst(),
+				books.isLast());
+	}
+
+	public PageResponse<BookResponseDTO> findAllBooksByOwner(int page, int size, Authentication currentUser) {
+		User user = (User) currentUser.getPrincipal();
+		Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
+		Page<Book> books = bookRepository.findAll(BookSpecification.withOwnerId(user.getId()), pageable);
+
+		List<BookResponseDTO> bookReponse = books.stream()
+				.map(BookMapper::toDTOResponse)
+				.toList();
+
+		return new PageResponse<>(
+				bookReponse,
+				books.getNumber(),
+				books.getSize(),
+				books.getTotalElements(),
+				books.getTotalPages(),
+				books.isFirst(),
+				books.isLast());
 	}
 }
