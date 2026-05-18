@@ -80,6 +80,17 @@ public class GlobalExceptionHandler {
 						.build());
 	}
 
+
+	// Thrown when we a user tries to edit details that they are not permitted to do.
+	@ExceptionHandler(OperationNotPermittedException.class)
+	public ResponseEntity<ExceptionResponse> handleException(OperationNotPermittedException exception) {
+		return ResponseEntity
+				.status(BAD_REQUEST)
+				.body(ExceptionResponse.builder()
+						.error(exception.getMessage())
+						.build());
+	}
+
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<ExceptionResponse> handleException(MethodArgumentNotValidException exception) {
 		Set<String> errors = new HashSet<>();
