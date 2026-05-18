@@ -30,7 +30,10 @@ public class Book extends BaseEntity {
 	private String authorName;
 	private String isbn;
 	private String synopsis;
-	private String bookCover;
+	private byte[] bookCover;
+
+	// NOTE: To use local file storage uncomment this and comment out the above byte[] version
+	// private String bookCover;
 
 	private boolean archived;
 	private boolean shareable;

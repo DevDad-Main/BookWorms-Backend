@@ -1,5 +1,7 @@
 package com.devdad.book_worms.controller;
 
+import java.io.IOException;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.devdad.book_worms.common.PageResponse;
 import com.devdad.book_worms.dto.book.BookRequestDTO;
@@ -16,6 +19,7 @@ import com.devdad.book_worms.dto.book.BookResponseDTO;
 import com.devdad.book_worms.dto.book.BorrowedBookResponseDTO;
 import com.devdad.book_worms.service.BookService;
 
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -105,5 +109,21 @@ public class BookController {
 			@PathVariable("book-id") Integer bookId,
 			Authentication currentUser) {
 		return ResponseEntity.ok(bookService.returnBorrowedBook(bookId, currentUser));
+	}
+
+	@PatchMapping("/borrow/return/approve/{book-id}")
+	public ResponseEntity<Integer> approveReturnBorrowedBook(
+			@PathVariable("book-id") Integer bookId,
+			Authentication currentUser) {
+		return ResponseEntity.ok(bookService.approveReturnBorrowedBook(bookId, currentUser));
+	}
+
+	@PostMapping("/cover/{book-id}")
+	public ResponseEntity<?> uploadBookCoverPhoto(
+			@PathVariable("book-id") Integer bookId,
+			@Parameter()
+			@RequestParam("file") MultipartFile file) throws IOException {
+
+		return ResponseEntity.ok(bookService.uploadCoverPhoto(file, bookId));
 	}
 }

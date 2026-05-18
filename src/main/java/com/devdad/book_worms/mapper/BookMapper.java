@@ -1,11 +1,14 @@
 package com.devdad.book_worms.mapper;
 
+import java.util.Base64;
+
 import com.devdad.book_worms.dto.book.BookRequestDTO;
 import com.devdad.book_worms.dto.book.BookResponseDTO;
 import com.devdad.book_worms.dto.book.BorrowedBookResponseDTO;
 import com.devdad.book_worms.model.book.Book;
 import com.devdad.book_worms.model.history.BookTransactionHistory;
 import com.devdad.book_worms.respository.BookTransactionHistoryRepository;
+import com.devdad.book_worms.util.FileUtils;
 
 public class BookMapper {
 
@@ -21,6 +24,12 @@ public class BookMapper {
 	}
 
 	public static BookResponseDTO toDTOResponse(Book book){
+// Check if cover exists, otherwise default to null
+    String base64Cover = null;
+    if (book.getBookCover() != null && book.getBookCover().length > 0) {
+        base64Cover = Base64.getEncoder().encodeToString(book.getBookCover());
+    }
+
 		return BookResponseDTO.builder()
 			.id(book.getId())
 			.title(book.getTitle())
@@ -31,7 +40,9 @@ public class BookMapper {
 			.archived(book.isArchived())
 			.shareable(book.isShareable())
 			.owner(book.getOwner().fullName())
-			// .cover() TODO: implemenet image upload later
+			.cover(base64Cover) 
+			// NOTE: If using local file storage then use the method
+			// .cover(FileUtils.readFileFromLocation(book.getBookCover()))
 			.build();
 	}
 

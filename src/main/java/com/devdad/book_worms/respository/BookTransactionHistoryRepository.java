@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.devdad.book_worms.model.book.Book;
 import com.devdad.book_worms.model.history.BookTransactionHistory;
 
 @Repository
@@ -46,5 +47,15 @@ public interface BookTransactionHistoryRepository extends JpaRepository<BookTran
 			AND transaction.returnApproved = false
 			""")
 	Optional<BookTransactionHistory> findByBookIdAndUserId(Integer bookId, Integer id);
+
+	@Query("""
+			SELECT transaction
+			FROM BookTransactionHistory transaction
+			WHERE transaction.book.owner.id = :userId
+			AND transaction.book.id = :bookId
+			AND transaction.returned = true
+			AND transaction.returnApproved = false
+			""")
+	Optional<BookTransactionHistory> findByBookIdAndOwnerId(Integer bookId, Integer userId);
 
 }
