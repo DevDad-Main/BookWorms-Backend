@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-import org.jspecify.annotations.Nullable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -256,7 +255,7 @@ public class BookService {
 				.orElseThrow(() -> new EntityNotFoundException("No book found with ID:: " + bookId));
 
 		User user = (User) currentUser.getPrincipal();
-		var bookCover = fileStorageService.saveFile(file,  user.getId());
+		var bookCover = fileStorageService.saveFile(file, user.getId());
 
 		// Need to set back to String instead of byte array
 		// book.setBookCover(bookCover);
