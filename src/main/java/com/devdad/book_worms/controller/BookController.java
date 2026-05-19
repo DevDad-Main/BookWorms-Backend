@@ -124,6 +124,6 @@ public class BookController {
 			@Parameter()
 			@RequestParam("file") MultipartFile file) throws IOException {
 
-		return ResponseEntity.ok(bookService.uploadCoverPhoto(file, bookId));
+		return ResponseEntity.ok(bookService.uploadBookCoverPhoto(file, bookId));
 	}
 }

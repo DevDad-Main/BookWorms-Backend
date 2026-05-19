@@ -13,6 +13,18 @@ services:
     networks:
       - internal
 
+  bookworms-service:
+    build: ./
+    container_name: booksworms-service
+    ports:
+      - "8088:8088"
+    networks:
+      - internal
+    depends_on:
+      - book-worms-db
+      - pgadmin
+      - mail-dev
+
   pgadmin:
     image: dpage/pgadmin4:latest
     container_name: pgadmin
