@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.devdad.book_worms.common.PageResponse;
 import com.devdad.book_worms.dto.book.BookRequestDTO;
@@ -20,7 +21,6 @@ import com.devdad.book_worms.dto.book.BorrowedBookResponseDTO;
 import com.devdad.book_worms.service.BookService;
 
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

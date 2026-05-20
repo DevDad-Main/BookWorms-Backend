@@ -28,9 +28,11 @@ import com.devdad.book_worms.respository.BookTransactionHistoryRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BookService {
 
 	private final BookRepository bookRepository;
@@ -38,6 +40,8 @@ public class BookService {
 	private final FileStorageService fileStorageService;
 
 	public Integer save(BookRequestDTO request, Authentication currentUser) {
+		log.info("Incoming saveBook() Data:: {}", request);
+
 		User user = (User) currentUser.getPrincipal();
 		Book book = BookMapper.toBook(request);
 		book.setOwner(user);
@@ -52,6 +56,8 @@ public class BookService {
 	}
 
 	public PageResponse<BookResponseDTO> findAllBooks(int page, int size, Authentication currentUser) {
+		log.info("Incoming findAllBooks() Data:: {} {} {}", page, size, currentUser);
+
 		User user = (User) currentUser.getPrincipal();
 		Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
 		Page<Book> books = bookRepository.findAllDisplayableBooks(pageable, user.getId());
