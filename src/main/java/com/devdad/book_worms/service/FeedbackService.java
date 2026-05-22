@@ -41,7 +41,7 @@ public class FeedbackService {
 
 		User user = (User) currentUser.getPrincipal();
 
-		if (!Objects.equals(book.getOwner().getId(), user.getId())) {
+		if (Objects.equals(book.getOwner().getId(), user.getId())) {
 			throw new OperationNotPermittedException("You cannot give a feedback to your own book.");
 		}
 
@@ -54,7 +54,7 @@ public class FeedbackService {
 			Authentication currentUser) {
 		PageRequest pageable = PageRequest.of(page, size);
 		User user = (User) currentUser.getPrincipal();
-		Page<Feedback> feedbacks = feedbackRepository.findAllByBookId(bookId, pageable);
+		Page<Feedback> feedbacks = feedbackRepository.findAllFeedbacksByBookId(bookId, pageable);
 		List<FeedbackResponseDTO> feedbackResponses = feedbacks.stream()
 				.map(f -> FeedbackMapper.toFeedbackResponseDTO(f, user.getId())).toList();
 

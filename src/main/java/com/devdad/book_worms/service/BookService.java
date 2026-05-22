@@ -177,11 +177,13 @@ public class BookService {
 			throw new OperationNotPermittedException("You are not allowed to borrow your own book.");
 		}
 
-		final boolean isAlreadyBorrowed = bookTransactionHistoryRepository.isAlreadyBorrowedByUser(bookId, user.getId());
-
-		if (isAlreadyBorrowed) {
+		final boolean isAlreadyBorrowedByUser = bookTransactionHistoryRepository.isAlreadyBorrowedByUser(bookId,
+				user.getId());
+		if (isAlreadyBorrowedByUser) {
 			throw new OperationNotPermittedException("Requested book is already borrowed.");
 		}
+
+		final boolean isAlreadyBorrowedByOtherUser = bookTransactionHistoryRepository.isAlreadyBorrowed(bookId);
 
 		BookTransactionHistory bookTransactionHistory = BookTransactionHistory.builder()
 				.user(user)
@@ -228,8 +230,8 @@ public class BookService {
 
 		User user = (User) currentUser.getPrincipal();
 
-		if (Objects.equals(book.getOwner().getId(), user.getId())) {
-			throw new OperationNotPermittedException("You are not allowed to borrow or return your own book.");
+		if (!Objects.equals(book.getOwner().getId(), user.getId())) {
+			throw new OperationNotPermittedException("You are not allowed to return a book that isn't your own.");
 		}
 
 		BookTransactionHistory bookTransactionHistory = bookTransactionHistoryRepository
