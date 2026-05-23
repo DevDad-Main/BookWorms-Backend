@@ -14,7 +14,7 @@ services:
       - internal
 
   bookworms-service:
-    build: ./
+    image: softwaredevdad/bookworms-api:latest
     container_name: booksworms-service
     ports:
       - "8088:8088"
