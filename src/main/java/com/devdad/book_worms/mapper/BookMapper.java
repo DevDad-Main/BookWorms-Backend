@@ -12,7 +12,7 @@ import com.devdad.book_worms.util.FileUtils;
 
 public class BookMapper {
 
-	public static Book toBook(BookRequestDTO request) {
+	public static Book toBook(BookRequestDTO request, String userId) {
 		return Book.builder()
 				.id(request.id())
 				.title(request.title())
@@ -21,6 +21,7 @@ public class BookMapper {
 				.synopsis(request.synopsis())
 				.archived(false)
 				.shareable(request.shareable())
+				.createdBy(userId)
 				.build();
 	}
 
@@ -40,7 +41,7 @@ public class BookMapper {
 				.rate(book.getBookRating())
 				.archived(book.isArchived())
 				.shareable(book.isShareable())
-				.owner(book.getOwner().fullName())
+				// .owner(book.getCreatedBy())
 				.cover(base64Cover)
 				// NOTE: If using local file storage then use the method
 				// .cover(FileUtils.readFileFromLocation(book.getBookCover()))

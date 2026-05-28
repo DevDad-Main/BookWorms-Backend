@@ -7,12 +7,12 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import com.devdad.book_worms.model.user.User;
+import com.devdad.book_worms.security.SecurityUtils;
 
-public class ApplicationAuditAware implements AuditorAware<Integer> {
+public class ApplicationAuditAware implements AuditorAware<String> {
 
 	@Override
-	public Optional<Integer> getCurrentAuditor() {
+	public Optional<String> getCurrentAuditor() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 		if (authentication == null ||
@@ -22,9 +22,7 @@ public class ApplicationAuditAware implements AuditorAware<Integer> {
 
 		}
 
-		User userPrincipal = (User) authentication.getPrincipal();
-
-		return Optional.ofNullable(userPrincipal.getId());
+		return Optional.ofNullable(SecurityUtils.getUserId(authentication));
 	}
 
 }

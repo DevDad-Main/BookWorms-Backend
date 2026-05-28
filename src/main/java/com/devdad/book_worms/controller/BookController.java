@@ -1,9 +1,11 @@
 package com.devdad.book_worms.controller;
 
 import java.io.IOException;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -121,9 +123,16 @@ public class BookController {
 	@PostMapping("/cover/{book-id}")
 	public ResponseEntity<?> uploadBookCoverPhoto(
 			@PathVariable("book-id") Integer bookId,
-			@Parameter()
-			@RequestParam("file") MultipartFile file) throws IOException {
+			@Parameter() @RequestParam("file") MultipartFile file) throws IOException {
 
 		return ResponseEntity.ok(bookService.uploadBookCoverPhoto(file, bookId));
+	}
+
+	@GetMapping("/debug/jwt")
+	public Map<String, Object> debugJwt(Authentication auth) {
+		if (auth instanceof JwtAuthenticationToken jwtAuth) {
+			return jwtAuth.getToken().getClaims();
+		}
+		return Map.of("error", "not JWT");
 	}
 }

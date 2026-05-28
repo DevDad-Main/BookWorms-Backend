@@ -20,8 +20,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @Builder
+// @Entity
 public class Token {
 
 	@Id

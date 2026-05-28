@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.devdad.book_worms.model.user.Token;
 
 
-@Repository
-public interface TokenRepository extends JpaRepository<Token, Integer> {
-	Optional<Token> findByToken(String token);
+// @Repository
+public interface TokenRepository { // extends JpaRepository<Token, Integer> {
+	// Optional<Token> findByToken(String token);
 }

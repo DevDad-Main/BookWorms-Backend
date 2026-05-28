@@ -38,10 +38,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "users")
-@EntityListeners(AuditingEntityListener.class)
 @Builder
+// @Entity
+// @Table(name = "users")
+// @EntityListeners(AuditingEntityListener.class)
 public class User implements UserDetails, Principal {
 
 	@Id

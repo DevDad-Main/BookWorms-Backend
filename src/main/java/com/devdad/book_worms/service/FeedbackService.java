@@ -14,9 +14,9 @@ import com.devdad.book_worms.dto.feedback.FeedbackRequestDTO;
 import com.devdad.book_worms.dto.feedback.FeedbackResponseDTO;
 import com.devdad.book_worms.exception.OperationNotPermittedException;
 import com.devdad.book_worms.mapper.FeedbackMapper;
+import com.devdad.book_worms.security.SecurityUtils;
 import com.devdad.book_worms.model.book.Book;
 import com.devdad.book_worms.model.feedback.Feedback;
-import com.devdad.book_worms.model.user.User;
 import com.devdad.book_worms.respository.BookRepository;
 import com.devdad.book_worms.respository.FeedbackRepository;
 
@@ -39,9 +39,8 @@ public class FeedbackService {
 					"You cannot give feedback to an archived or not shareable book");
 		}
 
-		User user = (User) currentUser.getPrincipal();
 
-		if (Objects.equals(book.getOwner().getId(), user.getId())) {
+		if (Objects.equals(book.getCreatedBy(), SecurityUtils.getUserId(currentUser))) {
 			throw new OperationNotPermittedException("You cannot give a feedback to your own book.");
 		}
 
@@ -53,10 +52,11 @@ public class FeedbackService {
 	public PageResponse<FeedbackResponseDTO> findAllFeedbacksByBook(Integer bookId, int page, int size,
 			Authentication currentUser) {
 		PageRequest pageable = PageRequest.of(page, size);
-		User user = (User) currentUser.getPrincipal();
+
 		Page<Feedback> feedbacks = feedbackRepository.findAllFeedbacksByBookId(bookId, pageable);
+
 		List<FeedbackResponseDTO> feedbackResponses = feedbacks.stream()
-				.map(f -> FeedbackMapper.toFeedbackResponseDTO(f, user.getId())).toList();
+				.map(f -> FeedbackMapper.toFeedbackResponseDTO(f, SecurityUtils.getUserId(currentUser))).toList();
 
 		return new PageResponse<>(
 				feedbackResponses,
@@ -65,8 +65,7 @@ public class FeedbackService {
 				feedbacks.getTotalElements(),
 				feedbacks.getTotalPages(),
 				feedbacks.isFirst(),
-				feedbacks.isLast()
-				);
+				feedbacks.isLast());
 	}
 
 }

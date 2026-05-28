@@ -26,27 +26,27 @@ import lombok.RequiredArgsConstructor;
 @Tag(name = "Authentication")
 public class AuthenticationController {
 
-	private final AuthenticationService authenticationService;
-
-	@PostMapping("/register")
-	@ResponseStatus(HttpStatus.ACCEPTED)
-	public ResponseEntity<?> register(
-			@RequestBody @Valid RegistrationRequestDTO registrationRequest) throws MessagingException {
-		authenticationService.register(registrationRequest);
-
-		return ResponseEntity.accepted().build();
-	}
-
-	@PostMapping("/authenticate")
-	public ResponseEntity<AuthenticationResponseDTO> authenticate(
-			@RequestBody @Valid AuthenticationRequestDTO authenticatedRequestDTO) {
-		return ResponseEntity.ok(authenticationService.authenticate(authenticatedRequestDTO));
-	}
-
-	@GetMapping("/activate-account")
-	public void confirm(
-			@RequestParam String token) throws MessagingException {
-		authenticationService.activateAccount(token);
-	}
+	// private final AuthenticationService authenticationService;
+	//
+	// @PostMapping("/register")
+	// @ResponseStatus(HttpStatus.ACCEPTED)
+	// public ResponseEntity<?> register(
+	// 		@RequestBody @Valid RegistrationRequestDTO registrationRequest) throws MessagingException {
+	// 	authenticationService.register(registrationRequest);
+	//
+	// 	return ResponseEntity.accepted().build();
+	// }
+	//
+	// @PostMapping("/authenticate")
+	// public ResponseEntity<AuthenticationResponseDTO> authenticate(
+	// 		@RequestBody @Valid AuthenticationRequestDTO authenticatedRequestDTO) {
+	// 	return ResponseEntity.ok(authenticationService.authenticate(authenticatedRequestDTO));
+	// }
+	//
+	// @GetMapping("/activate-account")
+	// public void confirm(
+	// 		@RequestParam String token) throws MessagingException {
+	// 	authenticationService.activateAccount(token);
+	// }
 
 }

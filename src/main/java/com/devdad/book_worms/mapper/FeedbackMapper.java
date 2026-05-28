@@ -16,7 +16,7 @@ public class FeedbackMapper {
 				.build();
 	}
 
-	public static FeedbackResponseDTO toFeedbackResponseDTO(Feedback feedback, Integer userId) {
+	public static FeedbackResponseDTO toFeedbackResponseDTO(Feedback feedback, String userId) {
 		return FeedbackResponseDTO.builder()
 				.note(feedback.getNote())
 				.comment(feedback.getComment())

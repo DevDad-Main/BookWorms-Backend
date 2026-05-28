@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.devdad.book_worms.model.user.User;
 
-@Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
+// @Repository
+public interface UserRepository { // extends JpaRepository<User, Integer> {
 
-	Optional<User> findByEmail(String email);
+	// Optional<User> findByEmail(String email);
 }

@@ -31,15 +31,12 @@ spring:
         timeout: 3000
         writetimeout: 5000
       protocol: smtp
-application:
   security:
-    jwt:
-      # Generated using - openssl rand -base64 32
-      secret-key: hLItECuTcQQpkpZMpfzVmFemDYDFA6Rg1RWSSuuEdHI=
-      expiration: 86400000 # 1 Day
-  mailing:
-    frontend:
-      activation-url: http://localhost:4200/activate-account
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: "http://keycloak-bsn:8080/realms/bookworms/protocol/openid-connect/certs"
+application:
   cors:
     origins: http://localhost:4200,http://localhost:8088
   file:

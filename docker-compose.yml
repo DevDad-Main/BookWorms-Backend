@@ -15,6 +15,7 @@ services:
 
   bookworms-service:
     image: softwaredevdad/bookworms-api:latest
+    # build: ./
     container_name: booksworms-service
     ports:
       - "8088:8088"
@@ -48,6 +49,27 @@ services:
       - "1025:1025"
     networks:
       - internal
+
+  keycloak:
+    container_name: keycloak-bsn
+    image: quay.io/keycloak/keycloak
+    ports:
+      - "9090:8080"
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      KC_HOSTNAME_URL: http://localhost:9090
+      KC_HOSTNAME_STRICT: false
+    networks:
+      - internal
+    depends_on:
+      - book-worms-db
+    volumes:
+      - ./keycloak/realm-export.json:/opt/keycloak/data/import/realm-export.json
+    command:
+      # Initiates Keycloak server
+      - "start-dev"
+      - "--import-realm"
 
 networks:
   internal:
