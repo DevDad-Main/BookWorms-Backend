@@ -126,6 +126,9 @@ jobs:
       - name: Copy docker-compose to Oracle VM
         run: scp docker-compose.yml ${{ secrets.ORACLE_SSH_USER }}@${{ secrets.ORACLE_VM_IP }}:ci-cd/docker-compose.yml
 
+      - name: Copy keycloak config to Oracle VM
+        run: scp -r keycloak ${{ secrets.ORACLE_SSH_USER }}@${{ secrets.ORACLE_VM_IP }}:ci-cd/keycloak
+
       - name: Deploy via SSH on Oracle VM
         run: |
           ssh ${{ secrets.ORACLE_SSH_USER }}@${{ secrets.ORACLE_VM_IP }} <<EOF
