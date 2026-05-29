@@ -132,6 +132,7 @@ jobs:
           export EMAIL_HOSTNAME=${{ secrets.EMAIL_HOSTNAME }}
           export EMAIL_USER_NAME=${{ secrets.EMAIL_USER_NAME }}
           export EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}
+          export KC_HOSTNAME_URL=${{ secrets.KC_HOSTNAME_URL }}
           cd ci-cd
           docker compose -f docker-compose.yml pull -q
           docker compose -f docker-compose.yml up -d
@@ -157,13 +158,13 @@ jobs:
             -s alias=github \
             -s providerId=github \
             -s enabled=true \
-            -s 'config.clientId=${{ secrets.GITHUB_CLIENT_ID }}' \
-            -s 'config.clientSecret=${{ secrets.GITHUB_CLIENT_SECRET }}' \
+            -s 'config.clientId=${{ secrets.KC_GITHUB_CLIENT_ID }}' \
+            -s 'config.clientSecret=${{ secrets.KC_GITHUB_CLIENT_SECRET }}' \
             -o 2>/dev/null || \
           docker exec keycloak-bsn /opt/keycloak/bin/kcadm.sh update identity-provider/instances/github \
             -r bookworms \
-            -s 'config.clientId=${{ secrets.GITHUB_CLIENT_ID }}' \
-            -s 'config.clientSecret=${{ secrets.GITHUB_CLIENT_SECRET }}'
+            -s 'config.clientId=${{ secrets.KC_GITHUB_CLIENT_ID }}' \
+            -s 'config.clientSecret=${{ secrets.KC_GITHUB_CLIENT_SECRET }}'
 
           docker exec keycloak-bsn /opt/keycloak/bin/kcadm.sh create identity-provider/instances \
             -r bookworms \

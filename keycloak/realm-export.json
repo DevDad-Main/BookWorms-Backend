@@ -108,6 +108,37 @@
       }
     }
   ],
+  "identityProviders": [
+    {
+      "alias": "github",
+      "providerId": "github",
+      "enabled": true,
+      "storeToken": false,
+      "addReadTokenRoleOnCreate": false,
+      "authenticateByDefault": false,
+      "linkOnly": false,
+      "config": {
+        "clientId": "",
+        "clientSecret": "",
+        "useJwksUrl": "true",
+        "defaultScope": "user:email"
+      }
+    },
+    {
+      "alias": "google",
+      "providerId": "google",
+      "enabled": true,
+      "storeToken": false,
+      "addReadTokenRoleOnCreate": false,
+      "authenticateByDefault": false,
+      "linkOnly": false,
+      "config": {
+        "clientId": "",
+        "clientSecret": "",
+        "useJwksUrl": "true"
+      }
+    }
+  ],
   "scopeMappings": [
     {
       "client": "bookworms-client",
