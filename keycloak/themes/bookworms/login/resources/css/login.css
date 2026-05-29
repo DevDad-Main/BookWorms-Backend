@@ -3,6 +3,7 @@
 /* ==========================================================================
    1. RESET & KEYCLOAK OVERRIDES
    ========================================================================== */
+
 *,
 *::before,
 *::after {
@@ -30,7 +31,8 @@ body {
   justify-content: center;
 }
 
-/* Force Keycloak's background wrappers to be completely invisible */
+/* Clear Keycloak background wrappers completely */
+
 .login-pf-page,
 .pf-v5-c-login,
 .pf-c-login {
@@ -47,6 +49,7 @@ body {
 /* ==========================================================================
    2. THE MAIN CARD (Unified Dark Container)
    ========================================================================== */
+
 .login-pf-page .card-pf,
 .pf-v5-c-login__container,
 .pf-c-login__container,
@@ -63,6 +66,7 @@ body {
 }
 
 /* Hide native headers or duplicate brands */
+
 #kc-header,
 .pf-v5-c-login__header,
 .pf-c-login__header {
@@ -72,6 +76,7 @@ body {
 /* ==========================================================================
    3. TYPOGRAPHY & HEADER
    ========================================================================== */
+
 #kc-page-title,
 .login-pf-header h1,
 .pf-v5-c-login__main-header h1 {
@@ -85,8 +90,40 @@ body {
 }
 
 /* ==========================================================================
-   4. FORM INPUTS & LABELS
+   4. SYSTEM ERROR ALERT MESSAGES
    ========================================================================== */
+
+.alert,
+.pf-v5-c-alert,
+.pf-c-alert,
+#kc-feedback-placeholder {
+  background: rgba(184, 92, 92, 0.1) !important;
+  border: 1px solid rgba(184, 92, 92, 0.25) !important;
+  border-radius: 10px !important;
+  padding: 14px 16px !important;
+  margin-bottom: 24px !important;
+  color: #e8a7a7 !important;
+  font-size: 0.9rem !important;
+  line-height: 1.4 !important;
+}
+
+.alert .kc-feedback-text,
+.pf-v5-c-alert__title,
+.pf-c-alert__title {
+  color: #e8a7a7 !important;
+  font-weight: 500 !important;
+}
+
+.alert .pficon,
+.pf-v5-c-alert__icon,
+.pf-c-alert__icon {
+  color: #b85c5c !important;
+}
+
+/* ==========================================================================
+   5. FORM INPUTS & LABELS
+   ========================================================================== */
+
 .form-group,
 .pf-v5-c-form__group {
   margin-bottom: 20px !important;
@@ -103,7 +140,6 @@ label,
   display: block !important;
 }
 
-/* Unified clean input fields */
 input[type="text"],
 input[type="password"],
 input[type="email"],
@@ -131,6 +167,7 @@ input:focus,
 }
 
 /* Native browser autofill overrides */
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {
@@ -139,15 +176,15 @@ input:-webkit-autofill:focus {
   box-shadow: inset 0 0 0 1000px #181a1b !important;
 }
 
-/* Text selection highlight style */
 input::selection {
   background: rgba(198, 169, 114, 0.3) !important;
   color: #f5f1e8 !important;
 }
 
 /* ==========================================================================
-   5. PASSWORD VISIBILITY WRAPPER CORRECTIONS
+   6. PASSWORD VISIBILITY WRAPPER
    ========================================================================== */
+
 .pf-v5-c-input-group,
 .pf-c-input-group,
 .input-group,
@@ -166,7 +203,6 @@ input::selection {
   border-radius: 10px !important;
 }
 
-/* Positions and unmasks the eye icon button */
 .pf-v5-c-input-group button,
 .pf-c-input-group button,
 .input-group-addon,
@@ -197,8 +233,9 @@ input[type="password"] {
 }
 
 /* ==========================================================================
-   6. ACTIONS (Remember Me & Forgot Password)
+   7. ACTIONS
    ========================================================================== */
+
 .login-pf-settings,
 .pf-v5-c-form__actions {
   display: flex !important;
@@ -212,6 +249,7 @@ input[type="password"] {
   display: flex !important;
   align-items: center !important;
   gap: 8px !important;
+  pointer-events: auto !important;
 }
 
 .checkbox label,
@@ -222,9 +260,15 @@ input[type="password"] {
   cursor: pointer;
 }
 
-input[type="checkbox"] {
-  transform: scale(0.95);
+.checkbox input[type="checkbox"],
+.pf-v5-c-check input[type="checkbox"] {
+  appearance: checkbox !important;
+  accent-color: #c6a972 !important;
+  cursor: pointer;
   margin: 0 !important;
+  position: relative !important;
+  width: 16px !important;
+  height: 16px !important;
 }
 
 a {
@@ -240,8 +284,9 @@ a:hover {
 }
 
 /* ==========================================================================
-   7. BUTTONS (Gold Palette)
+   8. MAIN ACTION BUTTON
    ========================================================================== */
+
 #kc-login,
 input[type="submit"],
 .btn-primary,
@@ -268,13 +313,91 @@ input[type="submit"]:hover,
 }
 
 /* ==========================================================================
-   8. REGISTRATION FOOTER 
+   9. IDENTITY SOCIAL PROVIDERS
    ========================================================================== */
+
+#kc-social-providers,
+.pf-v5-c-login__main-footer-links,
+.pf-c-login__main-footer-links {
+  margin-top: 16px !important;
+}
+
+#kc-social-providers h4 {
+  color: #8a847c !important;
+  font-family: "Inter", sans-serif !important;
+  font-size: 0.95rem !important;
+  font-weight: 400 !important;
+  text-align: left !important;
+  margin-bottom: 16px !important;
+}
+
+#kc-social-providers ul,
+.pf-v5-c-login__main-footer-links-list,
+.pf-c-login__main-footer-links-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  list-style: none !important;
+}
+
+.pf-v5-c-login__main-footer-links-item,
+.pf-c-login__main-footer-links-item,
+#kc-social-providers li {
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+#kc-social-providers a,
+.pf-v5-c-login__main-footer-links-item-link,
+.pf-c-login__main-footer-links-item-link {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  width: 100% !important;
+  height: 44px !important;
+  background: #181a1b !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 10px !important;
+  color: #f5f1e8 !important;
+  font-family: "Inter", sans-serif !important;
+  font-size: 0.9rem !important;
+  font-weight: 500 !important;
+  text-decoration: none !important;
+  transition: all 150ms ease !important;
+}
+
+#kc-social-providers a:hover,
+.pf-v5-c-login__main-footer-links-item-link:hover {
+  background: #1e2021 !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: #c6a972 !important;
+  text-decoration: none !important;
+}
+
+#kc-social-providers a svg,
+#kc-social-providers a img,
+.pf-v5-c-login__main-footer-links-item-link-icon {
+  width: 18px !important;
+  height: 18px !important;
+  flex-shrink: 0 !important;
+}
+
+/* ==========================================================================
+   10. REGISTRATION FOOTER & CLEANUP
+   ========================================================================== */
+
 #kc-info,
-#kc-info-wrapper,
 .login-pf-signup {
+  border-top: none !important;
+}
+
+#kc-info-wrapper {
   margin-top: 24px !important;
-  padding-top: 20px !important;
+  padding-top: 24px !important;
   border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
   text-align: center !important;
   background: transparent !important;
@@ -284,41 +407,4 @@ input[type="submit"]:hover,
 
 #kc-info-wrapper span {
   color: #8a847c !important;
-}
-
-/* ==========================================================================
-   9. FINAL POLISH: CHECKBOX ALIGNMENT & EXTRA BORDER REMOVAL
-   ========================================================================= */
-
-/* Fix checkbox text positioning so it doesn't clip or overlap the box */
-.checkbox input[type="checkbox"],
-.pf-v5-c-check input[type="checkbox"] {
-  appearance: checkbox !important; /* Forces native alignment behavior */
-  accent-color: #c6a972 !important; /* Colors the checkbox inside modern browsers */
-  cursor: pointer;
-  margin: 0 !important;
-  position: relative !important;
-  width: 16px !important;
-  height: 16px !important;
-}
-
-/* Ensure the layout block pushes the checkbox and its label safely apart */
-.checkbox,
-.pf-v5-c-check {
-  display: flex !important;
-  align-items: center !important;
-  gap: 8px !important;
-  pointer-events: auto !important;
-}
-
-/* Remove the duplicate separator line at the bottom */
-#kc-info,
-.login-pf-signup {
-  border-top: none !important; /* Destroys the redundant second line */
-}
-
-/* Maintain only the single necessary divider above the register link */
-#kc-info-wrapper {
-  border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
-  padding-top: 24px !important;
 }

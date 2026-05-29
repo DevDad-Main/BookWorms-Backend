@@ -3,7 +3,7 @@ name: BookWorms Backend API
 on:
   push:
     branches:
-      - ci/pipeline
+      - "feat/**"
     paths:
       - docker-compose.yml
       - Dockerfile
@@ -135,4 +135,48 @@ jobs:
           cd ci-cd
           docker compose -f docker-compose.yml pull -q
           docker compose -f docker-compose.yml up -d
+          EOF
+
+      - name: Configure Keycloak Identity Providers
+        run: |
+          ssh ${{ secrets.ORACLE_SSH_USER }}@${{ secrets.ORACLE_VM_IP }} <<EOF
+          echo "Waiting for Keycloak to be ready..."
+          until docker exec keycloak-bsn curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/realms/bookworms/ | grep -q "200"; do
+            sleep 5
+          done
+          echo "Keycloak is ready. Configuring identity providers..."
+
+          docker exec keycloak-bsn /opt/keycloak/bin/kcadm.sh config credentials \
+            --server http://localhost:8080 \
+            --realm master \
+            --user admin \
+            --password admin
+
+          docker exec keycloak-bsn /opt/keycloak/bin/kcadm.sh create identity-provider/instances \
+            -r bookworms \
+            -s alias=github \
+            -s providerId=github \
+            -s enabled=true \
+            -s 'config.clientId=${{ secrets.GITHUB_CLIENT_ID }}' \
+            -s 'config.clientSecret=${{ secrets.GITHUB_CLIENT_SECRET }}' \
+            -o 2>/dev/null || \
+          docker exec keycloak-bsn /opt/keycloak/bin/kcadm.sh update identity-provider/instances/github \
+            -r bookworms \
+            -s 'config.clientId=${{ secrets.GITHUB_CLIENT_ID }}' \
+            -s 'config.clientSecret=${{ secrets.GITHUB_CLIENT_SECRET }}'
+
+          docker exec keycloak-bsn /opt/keycloak/bin/kcadm.sh create identity-provider/instances \
+            -r bookworms \
+            -s alias=google \
+            -s providerId=google \
+            -s enabled=true \
+            -s 'config.clientId=${{ secrets.GOOGLE_CLIENT_ID }}' \
+            -s 'config.clientSecret=${{ secrets.GOOGLE_CLIENT_SECRET }}' \
+            -o 2>/dev/null || \
+          docker exec keycloak-bsn /opt/keycloak/bin/kcadm.sh update identity-provider/instances/google \
+            -r bookworms \
+            -s 'config.clientId=${{ secrets.GOOGLE_CLIENT_ID }}' \
+            -s 'config.clientSecret=${{ secrets.GOOGLE_CLIENT_SECRET }}'
+
+          echo "Identity providers configured successfully."
           EOF
