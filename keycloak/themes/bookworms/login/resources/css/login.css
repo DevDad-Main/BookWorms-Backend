@@ -1,0 +1,324 @@
+@import url("https://googleapis.com");
+
+/* ==========================================================================
+   1. RESET & KEYCLOAK OVERRIDES
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: #111315 !important;
+  color: #f5f1e8 !important;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Force Keycloak's background wrappers to be completely invisible */
+.login-pf-page,
+.pf-v5-c-login,
+.pf-c-login {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* ==========================================================================
+   2. THE MAIN CARD (Unified Dark Container)
+   ========================================================================== */
+.login-pf-page .card-pf,
+.pf-v5-c-login__container,
+.pf-c-login__container,
+#kc-container-wrapper {
+  background: #232527 !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45) !important;
+  width: 100% !important;
+  max-width: 400px !important;
+  padding: 32px !important;
+  margin: 20px auto !important;
+  overflow: hidden;
+}
+
+/* Hide native headers or duplicate brands */
+#kc-header,
+.pf-v5-c-login__header,
+.pf-c-login__header {
+  display: none !important;
+}
+
+/* ==========================================================================
+   3. TYPOGRAPHY & HEADER
+   ========================================================================== */
+#kc-page-title,
+.login-pf-header h1,
+.pf-v5-c-login__main-header h1 {
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-size: 1.65rem !important;
+  font-weight: 600 !important;
+  color: #f5f1e8 !important;
+  text-align: center !important;
+  margin: 0 0 24px 0 !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* ==========================================================================
+   4. FORM INPUTS & LABELS
+   ========================================================================== */
+.form-group,
+.pf-v5-c-form__group {
+  margin-bottom: 20px !important;
+}
+
+label,
+.control-label,
+.pf-v5-c-form__label {
+  font-family: "Inter", sans-serif !important;
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+  color: #b8b2a8 !important;
+  margin-bottom: 8px !important;
+  display: block !important;
+}
+
+/* Unified clean input fields */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+.form-control,
+.pf-v5-c-form-control {
+  width: 100% !important;
+  height: 44px !important;
+  padding: 10px 14px !important;
+  background: #181a1b !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 10px !important;
+  color: #f5f1e8 !important;
+  font-family: "Inter", sans-serif !important;
+  font-size: 0.95rem !important;
+  outline: none !important;
+  box-shadow: none !important;
+  transition: all 150ms ease !important;
+}
+
+input:focus,
+.form-control:focus {
+  border-color: #c6a972 !important;
+  box-shadow: 0 0 0 2px rgba(198, 169, 114, 0.15) !important;
+  background: #1e2021 !important;
+}
+
+/* Native browser autofill overrides */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #f5f1e8 !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+  box-shadow: inset 0 0 0 1000px #181a1b !important;
+}
+
+/* Text selection highlight style */
+input::selection {
+  background: rgba(198, 169, 114, 0.3) !important;
+  color: #f5f1e8 !important;
+}
+
+/* ==========================================================================
+   5. PASSWORD VISIBILITY WRAPPER CORRECTIONS
+   ========================================================================== */
+.pf-v5-c-input-group,
+.pf-c-input-group,
+.input-group,
+#kc-form-password {
+  background: transparent !important;
+  border: none !important;
+  display: flex !important;
+  align-items: center !important;
+  position: relative !important;
+  width: 100% !important;
+}
+
+.pf-v5-c-form-control.pf-m-icon,
+.pf-c-form-control.pf-m-icon {
+  background-color: #181a1b !important;
+  border-radius: 10px !important;
+}
+
+/* Positions and unmasks the eye icon button */
+.pf-v5-c-input-group button,
+.pf-c-input-group button,
+.input-group-addon,
+#kc-form-wrapper .pf-v5-c-button,
+.pf-v5-c-form-control__toggle-button,
+#kc-form-password-visibility {
+  background: transparent !important;
+  border: none !important;
+  position: absolute !important;
+  right: 4px !important;
+  height: 100% !important;
+  color: #8a847c !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 5 !important;
+  cursor: pointer;
+}
+
+.pf-v5-c-input-group button:hover,
+#kc-form-password-visibility:hover {
+  color: #c6a972 !important;
+}
+
+input[type="password"] {
+  padding-right: 44px !important;
+  background-color: #181a1b !important;
+}
+
+/* ==========================================================================
+   6. ACTIONS (Remember Me & Forgot Password)
+   ========================================================================== */
+.login-pf-settings,
+.pf-v5-c-form__actions {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin: 16px 0 24px 0 !important;
+}
+
+.checkbox,
+.pf-v5-c-check {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.checkbox label,
+.pf-v5-c-check__label {
+  color: #8a847c !important;
+  font-size: 0.85rem !important;
+  margin: 0 !important;
+  cursor: pointer;
+}
+
+input[type="checkbox"] {
+  transform: scale(0.95);
+  margin: 0 !important;
+}
+
+a {
+  color: #c6a972 !important;
+  text-decoration: none !important;
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+}
+
+a:hover {
+  color: #d4bc8a !important;
+  text-decoration: underline !important;
+}
+
+/* ==========================================================================
+   7. BUTTONS (Gold Palette)
+   ========================================================================== */
+#kc-login,
+input[type="submit"],
+.btn-primary,
+.pf-v5-c-button.pf-m-primary {
+  width: 100% !important;
+  height: 46px !important;
+  background: #c6a972 !important;
+  color: #111315 !important;
+  border: none !important;
+  border-radius: 10px !important;
+  font-family: "Inter", sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+  cursor: pointer !important;
+  box-shadow: none !important;
+  transition: all 200ms ease !important;
+}
+
+#kc-login:hover,
+input[type="submit"]:hover,
+.btn-primary:hover {
+  background: #d4bc8a !important;
+  box-shadow: 0 4px 16px rgba(198, 169, 114, 0.2) !important;
+}
+
+/* ==========================================================================
+   8. REGISTRATION FOOTER 
+   ========================================================================== */
+#kc-info,
+#kc-info-wrapper,
+.login-pf-signup {
+  margin-top: 24px !important;
+  padding-top: 20px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+  text-align: center !important;
+  background: transparent !important;
+  color: #8a847c !important;
+  font-size: 0.9rem !important;
+}
+
+#kc-info-wrapper span {
+  color: #8a847c !important;
+}
+
+/* ==========================================================================
+   9. FINAL POLISH: CHECKBOX ALIGNMENT & EXTRA BORDER REMOVAL
+   ========================================================================= */
+
+/* Fix checkbox text positioning so it doesn't clip or overlap the box */
+.checkbox input[type="checkbox"],
+.pf-v5-c-check input[type="checkbox"] {
+  appearance: checkbox !important; /* Forces native alignment behavior */
+  accent-color: #c6a972 !important; /* Colors the checkbox inside modern browsers */
+  cursor: pointer;
+  margin: 0 !important;
+  position: relative !important;
+  width: 16px !important;
+  height: 16px !important;
+}
+
+/* Ensure the layout block pushes the checkbox and its label safely apart */
+.checkbox,
+.pf-v5-c-check {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  pointer-events: auto !important;
+}
+
+/* Remove the duplicate separator line at the bottom */
+#kc-info,
+.login-pf-signup {
+  border-top: none !important; /* Destroys the redundant second line */
+}
+
+/* Maintain only the single necessary divider above the register link */
+#kc-info-wrapper {
+  border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+  padding-top: 24px !important;
+}

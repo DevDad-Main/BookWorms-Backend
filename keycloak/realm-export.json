@@ -2,10 +2,13 @@
   "id": "bookworms",
   "realm": "bookworms",
   "displayName": "BookWorms",
+  "loginTheme": "bookworms",
   "enabled": true,
   "loginWithEmailAllowed": true,
   "registrationAllowed": true,
   "resetPasswordAllowed": true,
+  "registrationEmailAsUsername": true,
+  "rememberMe": true,
   "bruteForceProtected": true,
   "sslRequired": "none",
   "roles": {
@@ -35,7 +38,7 @@
           "temporary": false
         }
       ],
-      "realmRoles": ["user"]
+      "realmRoles": ["USER"]
     },
     {
       "username": "admin",
@@ -51,7 +54,7 @@
           "temporary": false
         }
       ],
-      "realmRoles": ["user", "admin"]
+      "realmRoles": ["USER", "ADMIN"]
     }
   ],
   "clients": [

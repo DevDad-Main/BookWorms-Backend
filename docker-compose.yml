@@ -66,6 +66,7 @@ services:
       - book-worms-db
     volumes:
       - ./keycloak/realm-export.json:/opt/keycloak/data/import/realm-export.json
+      - ./keycloak/themes/bookworms:/opt/keycloak/themes/bookworms
     command:
       # Initiates Keycloak server
       - "start-dev"
