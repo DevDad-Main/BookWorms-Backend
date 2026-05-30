@@ -128,7 +128,7 @@ jobs:
 
       - name: Copy keycloak config to Oracle VM
         run: |
-          ssh ${{ secrets.ORACLE_SSH_USER }}@${{ secrets.ORACLE_VM_IP }} "mkdir -p ci-cd/keycloak/themes/bookworms/login/resources/css"
+          ssh ${{ secrets.ORACLE_SSH_USER }}@${{ secrets.ORACLE_VM_IP }} "rm -rf ci-cd/keycloak && mkdir -p ci-cd/keycloak/themes/bookworms/login/resources/css"
           scp keycloak/realm-export.json ${{ secrets.ORACLE_SSH_USER }}@${{ secrets.ORACLE_VM_IP }}:ci-cd/keycloak/realm-export.json
           scp keycloak/themes/bookworms/login/theme.properties ${{ secrets.ORACLE_SSH_USER }}@${{ secrets.ORACLE_VM_IP }}:ci-cd/keycloak/themes/bookworms/login/theme.properties
           scp keycloak/themes/bookworms/login/resources/css/login.css ${{ secrets.ORACLE_SSH_USER }}@${{ secrets.ORACLE_VM_IP }}:ci-cd/keycloak/themes/bookworms/login/resources/css/login.css
