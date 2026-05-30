@@ -128,9 +128,10 @@ jobs:
 
       - name: Copy keycloak config to Oracle VM
         run: |
-          tar czf /tmp/keycloak.tar.gz keycloak
-          scp /tmp/keycloak.tar.gz ${{ secrets.ORACLE_SSH_USER }}@${{ secrets.ORACLE_VM_IP }}:ci-cd/keycloak.tar.gz
-          ssh ${{ secrets.ORACLE_SSH_USER }}@${{ secrets.ORACLE_VM_IP }} "cd ci-cd && tar xzf keycloak.tar.gz && rm keycloak.tar.gz"
+          ssh ${{ secrets.ORACLE_SSH_USER }}@${{ secrets.ORACLE_VM_IP }} "mkdir -p ci-cd/keycloak/themes/bookworms/login/resources/css"
+          scp keycloak/realm-export.json ${{ secrets.ORACLE_SSH_USER }}@${{ secrets.ORACLE_VM_IP }}:ci-cd/keycloak/realm-export.json
+          scp keycloak/themes/bookworms/login/theme.properties ${{ secrets.ORACLE_SSH_USER }}@${{ secrets.ORACLE_VM_IP }}:ci-cd/keycloak/themes/bookworms/login/theme.properties
+          scp keycloak/themes/bookworms/login/resources/css/login.css ${{ secrets.ORACLE_SSH_USER }}@${{ secrets.ORACLE_VM_IP }}:ci-cd/keycloak/themes/bookworms/login/resources/css/login.css
 
       - name: Deploy via SSH on Oracle VM
         run: |
